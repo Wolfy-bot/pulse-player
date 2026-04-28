@@ -1,0 +1,533 @@
+:root {
+  --page-bg: #060a12;
+  --surface: rgba(14, 20, 33, 0.86);
+  --surface-strong: rgba(20, 28, 44, 0.95);
+  --line: rgba(255, 255, 255, 0.08);
+  --text: #f3f6ff;
+  --muted: #93a0bb;
+  --accent: #68e0cf;
+  --accent-strong: #59aef9;
+  --accent-warm: #ff9673;
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: var(--text);
+  font-family: "Aptos", "Segoe UI Variable", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(89, 174, 249, 0.18), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(255, 150, 115, 0.14), transparent 28%),
+    linear-gradient(140deg, #050811 0%, #0a101b 48%, #060911 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(circle at center, black 55%, transparent 95%);
+}
+
+.player-shell {
+  position: relative;
+  width: min(1120px, 100%);
+  display: grid;
+  grid-template-columns: minmax(280px, 1.05fr) minmax(320px, 0.95fr);
+  gap: 28px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 32px;
+  background: linear-gradient(180deg, rgba(17, 24, 37, 0.94), rgba(11, 17, 29, 0.96));
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(22px);
+}
+
+.player-shell::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 31px;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.album-panel,
+.control-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.album-panel {
+  gap: 20px;
+}
+
+.eyebrow,
+.status-badge,
+.label-kicker,
+.playlist-heading span {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.76rem;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--accent);
+}
+
+.album-art {
+  --art-a: #4e8dff;
+  --art-b: #60e4cf;
+  --art-c: #ff9673;
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(140deg, var(--art-a) 0%, var(--art-b) 58%, var(--art-c) 100%);
+  isolation: isolate;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.42);
+}
+
+.album-art::before,
+.album-art::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.album-art::before {
+  width: 230px;
+  height: 230px;
+  top: -36px;
+  right: -32px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.34), transparent 70%);
+}
+
+.album-art::after {
+  width: 290px;
+  height: 290px;
+  left: -90px;
+  bottom: -110px;
+  background: radial-gradient(circle, rgba(4, 8, 16, 0.38), transparent 72%);
+}
+
+.album-glow {
+  position: absolute;
+  inset: 12% auto auto 9%;
+  width: 52%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.22), transparent 65%);
+  filter: blur(12px);
+}
+
+.vinyl-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  opacity: 0.7;
+}
+
+.ring-one {
+  inset: 15% 16% auto auto;
+  width: 220px;
+  aspect-ratio: 1;
+}
+
+.ring-two {
+  inset: 27% auto auto 14%;
+  width: 110px;
+  aspect-ratio: 1;
+}
+
+.artwork-label {
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  bottom: 28px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  z-index: 1;
+}
+
+.label-kicker {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.label-initials {
+  display: inline-grid;
+  place-items: center;
+  min-width: 84px;
+  height: 84px;
+  padding: 12px;
+  border-radius: 22px;
+  font-family: "Aptos Display", "Trebuchet MS", sans-serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #08111d;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+}
+
+.track-copy h1,
+.playlist-heading h2 {
+  margin: 0;
+  font-family: "Aptos Display", "Trebuchet MS", sans-serif;
+}
+
+.track-copy h1 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1;
+}
+
+.track-copy p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.control-panel {
+  gap: 18px;
+  padding: 6px 0;
+}
+
+.player-top,
+.time-row,
+.controls,
+.volume-head,
+.playlist-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.status-badge {
+  margin: 0;
+  color: var(--accent);
+}
+
+.sound-bars {
+  display: inline-flex;
+  align-items: end;
+  gap: 6px;
+  height: 24px;
+}
+
+.sound-bars span {
+  width: 5px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-warm));
+  height: 30%;
+  opacity: 0.45;
+}
+
+body.is-playing .sound-bars span {
+  opacity: 1;
+  animation: pulse-bars 0.9s ease-in-out infinite;
+}
+
+body.is-playing .sound-bars span:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+body.is-playing .sound-bars span:nth-child(3) {
+  animation-delay: 0.24s;
+}
+
+body.is-playing .sound-bars span:nth-child(4) {
+  animation-delay: 0.36s;
+}
+
+body.is-playing .album-art {
+  animation: cover-float 8s ease-in-out infinite;
+}
+
+body.is-playing .ring-one {
+  animation: spin 18s linear infinite;
+}
+
+body.is-playing .ring-two {
+  animation: spin 13s linear infinite reverse;
+}
+
+.progress-card,
+.volume-card,
+.playlist-card {
+  padding: 20px;
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(18, 25, 40, 0.92), rgba(12, 18, 30, 0.88));
+}
+
+.time-row {
+  margin-bottom: 16px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.progress-track {
+  position: relative;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  outline: none;
+}
+
+.progress-track:focus-visible {
+  box-shadow: 0 0 0 3px rgba(104, 224, 207, 0.3);
+}
+
+.progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+}
+
+.progress-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 3px solid #07111c;
+  background: #ffffff;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.controls {
+  justify-content: center;
+  margin: 6px 0;
+}
+
+.icon-button,
+.play-button {
+  border: none;
+  cursor: pointer;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease,
+    color 0.22s ease;
+}
+
+.icon-button {
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  color: var(--text);
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.play-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-width: 160px;
+  padding: 18px 28px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #08111d;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  box-shadow: 0 20px 38px rgba(89, 174, 249, 0.3);
+}
+
+.play-icon {
+  font-size: 1.1rem;
+}
+
+.icon-button:hover,
+.play-button:hover,
+.playlist-item button:hover {
+  transform: translateY(-4px);
+}
+
+.icon-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.play-button:hover {
+  box-shadow: 0 22px 44px rgba(104, 224, 207, 0.26);
+}
+
+.icon-button:active,
+.play-button:active,
+.playlist-item button:active {
+  transform: translateY(0);
+}
+
+.volume-card label,
+.playlist-item strong {
+  font-weight: 600;
+}
+
+#volumeControl {
+  width: 100%;
+  margin-top: 12px;
+  accent-color: var(--accent);
+}
+
+.playlist {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.playlist-item button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.04);
+  transition:
+    transform 0.22s ease,
+    background 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.playlist-item button.active {
+  border-color: rgba(104, 224, 207, 0.35);
+  background: linear-gradient(90deg, rgba(104, 224, 207, 0.12), rgba(255, 255, 255, 0.05));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.track-number,
+.track-tag {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.track-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.track-details small {
+  color: var(--muted);
+}
+
+@keyframes pulse-bars {
+  0%,
+  100% {
+    height: 32%;
+  }
+  50% {
+    height: 100%;
+  }
+}
+
+@keyframes cover-float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 960px) {
+  .player-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .album-art {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 14px;
+  }
+
+  .player-shell {
+    padding: 18px;
+    gap: 20px;
+    border-radius: 24px;
+  }
+
+  .album-art {
+    min-height: 300px;
+  }
+
+  .artwork-label {
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+  }
+
+  .label-initials {
+    min-width: 68px;
+    height: 68px;
+    font-size: 1.3rem;
+  }
+
+  .controls {
+    gap: 10px;
+  }
+
+  .icon-button {
+    width: 56px;
+    height: 56px;
+  }
+
+  .play-button {
+    min-width: 136px;
+    padding: 16px 22px;
+  }
+
+  .playlist-item button {
+    grid-template-columns: auto 1fr;
+  }
+
+  .track-tag {
+    display: none;
+  }
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulse Player</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="player-shell">
+    <section class="album-panel">
+      <p class="eyebrow">Now Spinning</p>
+
+      <!-- Dynamic album art uses colors and initials from the active song. -->
+      <div class="album-art" id="albumArt" aria-hidden="true">
+        <div class="album-glow"></div>
+        <div class="vinyl-ring ring-one"></div>
+        <div class="vinyl-ring ring-two"></div>
+        <div class="artwork-label">
+          <span class="label-kicker">Featured Track</span>
+          <span class="label-initials" id="artworkInitials">PP</span>
+        </div>
+      </div>
+
+      <div class="track-copy">
+        <h1 id="songTitle">Loading playlist...</h1>
+        <p id="songArtist">Please wait</p>
+      </div>
+    </section>
+
+    <section class="control-panel">
+      <div class="player-top">
+        <p class="status-badge" id="statusText">Ready to play</p>
+        <div class="sound-bars" id="soundBars" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <div class="progress-card">
+        <div class="time-row">
+          <span id="currentTime">0:00</span>
+          <span id="totalDuration">0:00</span>
+        </div>
+
+        <!-- The whole bar is clickable so users can jump to any point in the track. -->
+        <div
+          class="progress-track"
+          id="progressTrack"
+          role="slider"
+          tabindex="0"
+          aria-label="Seek through the current song"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <div class="progress-fill" id="progressFill"></div>
+          <div class="progress-thumb" id="progressThumb"></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="icon-button" id="prevButton" type="button" aria-label="Previous song">
+          <span>◀◀</span>
+        </button>
+        <button class="play-button" id="playButton" type="button" aria-label="Play or pause">
+          <span class="play-icon" id="playIcon">▶</span>
+          <span id="playLabel">Play</span>
+        </button>
+        <button class="icon-button" id="nextButton" type="button" aria-label="Next song">
+          <span>▶▶</span>
+        </button>
+      </div>
+
+      <div class="volume-card">
+        <div class="volume-head">
+          <label for="volumeControl">Volume</label>
+          <span id="volumeValue">80%</span>
+        </div>
+        <input id="volumeControl" type="range" min="0" max="1" step="0.01" value="0.8">
+      </div>
+
+      <div class="playlist-card">
+        <div class="playlist-heading">
+          <h2>Playlist</h2>
+          <span id="trackCounter">1 / 3</span>
+        </div>
+        <ul class="playlist" id="playlist"></ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- HTML5 audio element controlled entirely through JavaScript. -->
+  <audio id="audio" preload="metadata"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
